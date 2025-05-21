@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>Hello World!</title>
-<link rel="stylesheet" href="bluestyle.css">
+<link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
 
