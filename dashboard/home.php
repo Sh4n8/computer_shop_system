@@ -3,16 +3,16 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>End Session</title>
+  <title>Main Page</title>
 </head>
 
 <body>
 
-  <?php include('../../include/index.php'); ?>
+  <?php include('../include/index.php'); ?>
 
   <div style="margin-left: 260px; padding: 20px;">
-    <h1>End Session</h1>
-    <p>Here you can end sessions of computers</p>
+    <h1>Main Page</h1>
+    <p>View summary like active PCs, income, etc</p>
   </div>
 
 </body>

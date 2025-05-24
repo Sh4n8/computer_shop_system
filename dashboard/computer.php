@@ -1,12 +1,6 @@
-<?php
-$title = "Computers";
-include 'include/index.php'; // remove the "..", because it's already in the root folder
-?>
+<?php include('../include/index.php'); ?>
 
-<h1>Computer Page</h1>
-<p>This is a simple placeholder for the Computers section.</p>
-
-</div> <!-- closes main-content --> jahworhfaoufw
-</body>
-
-</html>
+<div style="margin-left: 260px; padding: 20px;">
+  <h1>Computer Management</h1>
+  <p>Here you can manage your computer stations.</p>
+</div>

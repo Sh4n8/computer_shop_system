@@ -3,16 +3,16 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>End Session</title>
+  <title>Service</title>
 </head>
 
 <body>
 
-  <?php include('../../include/index.php'); ?>
+  <?php include('../include/index.php'); ?>
 
   <div style="margin-left: 260px; padding: 20px;">
-    <h1>End Session</h1>
-    <p>Here you can end sessions of computers</p>
+    <h1>Settings</h1>
+    <p>Service list CRUD</p>
   </div>
 
 </body>
