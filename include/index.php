@@ -37,7 +37,7 @@
           <span>End Session</span>
         </a>
       </li>
-      <li class="<?= $currentPage == 'services.php' ? 'active' : '' ?>">
+      <li class="<?= $currentPage == 'service.php' ? 'active' : '' ?>">
         <a href="../dashboard/service.php">
           <i class="bi bi-tools"></i>
           <span>Services</span>
