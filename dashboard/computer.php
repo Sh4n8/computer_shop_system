@@ -6,7 +6,7 @@ include 'include/index.php'; // remove the "..", because it's already in the roo
 <h1>Computer Page</h1>
 <p>This is a simple placeholder for the Computers section.</p>
 
-</div> <!-- closes main-content -->
+</div> <!-- closes main-content --> jahworhfaoufw
 </body>
 
 </html>
