@@ -1,44 +1,61 @@
 body {
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #121212;
-  color: #fff;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #1e1e2f;
+  color: white;
 }
 
 .sidebar {
   width: 250px;
   height: 100vh;
-  background-color: #1e1e1e;
+  background-color: #141421;
   padding-top: 20px;
   position: fixed;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.sidebar ul li {
-  padding: 15px 20px;
-  color: #ccc;
+.sidebar li {
+  font-size: 16px;
+  border-left: 5px solid transparent;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.sidebar li a {
   display: flex;
   align-items: center;
   gap: 15px;
-  cursor: pointer;
-  transition: 0.3s;
+  padding: 15px 20px;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-.sidebar ul li:hover {
-  background-color: #2a2a2a;
-  color: #fff;
+.sidebar li a:hover {
+  background-color: #1f1f35;
+  transform: translateX(5px);
 }
 
-.sidebar ul li.active {
-  background-color: #2a2a2a;
-  border-left: 4px solid red;
-  color: #fff;
+.sidebar li.active {
+  border-left: 5px solid #f44336;
+  background-color: #1a1a2b; /* slightly different to stand out */
 }
 
-.sidebar ul li i {
-  font-size: 1.2rem;
+.sidebar li.active a {
+  color: white;
+  font-weight: bold;
+}
+
+.sidebar li a:hover {
+  background-color: #1f1f35;
+  transform: translateX(5px);
+}
+
+.sidebar i {
+  font-size: 20px;
 }
