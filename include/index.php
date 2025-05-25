@@ -14,13 +14,13 @@
   <div class="sidebar">
     <ul>
       <li class="<?= $currentPage == 'home.php' ? 'active' : '' ?>">
-        <a href="../dashboard/home.php">
+        <a href="../dashboard/dashboard.php">
           <i class="bi bi-speedometer2"></i>
           <span>Dashboard</span>
         </a>
       </li>
       <li class="<?= $currentPage == 'computer.php' ? 'active' : '' ?>">
-        <a href="../dashboard/computer.php">
+        <a href="../computer/computer.php">
           <i class="bi bi-pc-display"></i>
           <span>Computers</span>
         </a>
@@ -38,19 +38,19 @@
         </a>
       </li>
       <li class="<?= $currentPage == 'service.php' ? 'active' : '' ?>">
-        <a href="../dashboard/service.php">
+        <a href="../service/service.php">
           <i class="bi bi-tools"></i>
           <span>Services</span>
         </a>
       </li>
       <li class="<?= $currentPage == 'reports.php' ? 'active' : '' ?>">
-        <a href="../dashboard/reports.php">
+        <a href="../reports/reports.php">
           <i class="bi bi-file-earmark-text"></i>
           <span>Reports</span>
         </a>
       </li>
       <li class="<?= $currentPage == 'settings.php' ? 'active' : '' ?>">
-        <a href="../dashboard/settings.php">
+        <a href="../settings/settings.php">
           <i class="bi bi-gear"></i>
           <span>Settings</span>
         </a>

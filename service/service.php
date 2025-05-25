@@ -9,12 +9,16 @@
 <body>
 
   <?php include('../include/index.php'); ?>
-
+ 
   <div style="margin-left: 260px; padding: 20px;">
-    <h1>Settings</h1>
-    <p>Service list CRUD</p>
+    <h1>Service</h1>
+    <p>Service List CRUD</p>
   </div>
 
 </body>
 
 </html>
+
+<style>
+
+</style>
