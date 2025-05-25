@@ -8,11 +8,11 @@
 
 <body>
 
-  <?php include('../../include/index.php'); ?>
+  <?php include('../include/index.php'); ?>
 
   <div style="margin-left: 260px; padding: 20px;">
-    <h1>StartnnSession</h1>
-    <p>Here you can start sessions of computers</p>
+    <h1>End Session</h1>
+    <p>Here you can end sessions of computers</p>
   </div>
 
 </body>

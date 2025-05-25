@@ -26,13 +26,13 @@
         </a>
       </li>
       <li class="<?= $currentPage == 'start_session.php' ? 'active' : '' ?>">
-        <a href="../dashboard/session/start_session.php">
+        <a href="../start_session/start_session.php">
           <i class="bi bi-play-circle"></i>
           <span>Start Session</span>
         </a>
       </li>
       <li class="<?= $currentPage == 'end_session.php' ? 'active' : '' ?>">
-        <a href="../dashboard/session/end_session.php">
+        <a href="../end_session/end_session.php">
           <i class="bi bi-stop-circle"></i>
           <span>End Session</span>
         </a>
