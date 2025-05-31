@@ -37,7 +37,7 @@
     }
 
     .btn-add:hover {
-      background-color: #d32f2f;
+      background-color: #d32f2f; 
     }
 
     .btn-action {
@@ -101,6 +101,7 @@
         $query = "SELECT * FROM tblcomputer ORDER BY computer_id ASC";
         $result = $conn->query($query);
 
+            //dwhudhauwhud
         if (!$result) {
           echo '<tr><td colspan="5">Error: ' . $conn->error . '</td></tr>';
         } else if ($result->num_rows > 0) {
@@ -130,3 +131,4 @@
 </main>
 </body>
 </html>
+ 
