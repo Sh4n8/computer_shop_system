@@ -101,7 +101,7 @@
         $query = "SELECT * FROM tblcomputer ORDER BY computer_id ASC";
         $result = $conn->query($query);
 
-            //dwhudhauwhuddhwauhdw
+            //hfygggugu
         if (!$result) {
           echo '<tr><td colspan="5">Error: ' . $conn->error . '</td></tr>';
         } else if ($result->num_rows > 0) {
