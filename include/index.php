@@ -13,7 +13,7 @@
 
   <div class="sidebar">
     <ul>
-      <li class="<?= $currentPage == 'home.php' ? 'active' : '' ?>">
+      <li class="<?= $currentPage == 'dashboard.php' ? 'active' : '' ?>">
         <a href="../dashboard/dashboard.php">
           <i class="bi bi-speedometer2"></i>
           <span>Dashboard</span>
