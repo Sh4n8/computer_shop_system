@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 04, 2025 at 04:07 PM
+-- Generation Time: Jun 04, 2025 at 05:03 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -39,6 +39,26 @@ CREATE TABLE `dbuser` (
 
 INSERT INTO `dbuser` (`user_id`, `username`, `password`) VALUES
 (1, 'alejandro', 'Ale-Alejandro64');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shopsettings`
+--
+
+CREATE TABLE `shopsettings` (
+  `id` int(11) NOT NULL,
+  `shop_name` varchar(100) NOT NULL,
+  `hourly_rate` float NOT NULL,
+  `contact_email` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `shopsettings`
+--
+
+INSERT INTO `shopsettings` (`id`, `shop_name`, `hourly_rate`, `contact_email`) VALUES
+(1, 'Cave-Lipa', 30, 'cave_lipa@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -96,6 +116,12 @@ ALTER TABLE `dbuser`
   ADD PRIMARY KEY (`user_id`);
 
 --
+-- Indexes for table `shopsettings`
+--
+ALTER TABLE `shopsettings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tblcomputer`
 --
 ALTER TABLE `tblcomputer`
@@ -124,6 +150,12 @@ ALTER TABLE `tblsessions`
 --
 ALTER TABLE `dbuser`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `shopsettings`
+--
+ALTER TABLE `shopsettings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tblcomputer`
