@@ -82,6 +82,11 @@ $row = $result->fetch_assoc();
 <?php include('../include/index.php'); ?>
 <main>
   <h2>Edit Computer</h2>
+  
+  <?php if (isset($_GET['error']) && $_GET['error'] === 'name_taken'): ?>
+    <p style="color: red; text-align: center;">Computer name already exists. Please choose a different name.</p>
+  <?php endif; ?>
+
   <form action="update-save.php" method="POST">
     <input type="hidden" name="computer_id" value="<?php echo $row['computer_id']; ?>">
 
