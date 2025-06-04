@@ -112,6 +112,61 @@
     .submit-btn:hover {
       background-color: #89c794;
     }
+
+    .slider-container {
+      width: 250px;
+      margin-top: 40px;
+      user-select: none;
+    }
+
+    .slider-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .slider {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 40px;
+      border-radius: 20px;
+      background: #ddd;
+      outline: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      background-color: #41416b;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 40px;
+      height: 40px;
+      background: #a8f7b5;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 40px;
+      height: 40px;
+      background: #a8f7b5;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    .slider:active::-webkit-slider-thumb {
+      background-color: #89c794;
+    }
   </style>
 </head>
 
@@ -139,6 +194,21 @@
     <?php elseif (!empty($errorMsg)) : ?>
       <p style="color: red; margin-top: 10px;">⚠️ <?= htmlspecialchars($errorMsg) ?></p>
     <?php endif; ?>
+
+    <div class="slider-container">
+      <label for="logout-slider" class="slider-label">Slide to Log Out</label>
+      <input type="range" min="0" max="100" value="0" id="logout-slider" class="slider">
+    </div>
   </div>
+  <script>
+    const slider = document.getElementById('logout-slider');
+
+    slider.addEventListener('input', () => {
+      if (slider.value >= 95) {
+        // just slide it to max, then redirect logout
+        window.location.href = '../login/login.php'; // change path if needed
+      }
+    });
+  </script>
 </body>
 </html>
