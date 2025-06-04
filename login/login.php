@@ -94,7 +94,6 @@
     label {
       font-size: 12px;
     }
-
   </style>
 </head>
 
@@ -114,14 +113,52 @@
       <br>
       <label name="password">Password</label>
       <br>
-      <input type="password" name="password" placeholder="Password" required>
+      <div style="position: relative; display: inline-block;">
+        <input type="password" name="password" placeholder="Password" id="passwordInput" required>
+        <button type="button" id="showPass" style="
+          position: absolute;
+          right: 8px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          color: #ccc;
+          cursor: pointer;
+          font-size: 14px;
+        ">👁️</button>
+      </div>
       <br>
       <br>
       <br>
       <input type="submit" name="login" value="Log-in" class="login">
     </form>
   </div>
+  <script>
+    const passInput = document.getElementById('passwordInput')
+    const showBtn = document.getElementById('showPass')
 
+    showBtn.addEventListener('mousedown', () => {
+      passInput.type = 'text'
+    })
+
+    showBtn.addEventListener('mouseup', () => {
+      passInput.type = 'password'
+    })
+
+    // for if they move mouse away while holding down 👀
+    showBtn.addEventListener('mouseleave', () => {
+      passInput.type = 'password'
+    })
+
+    // for mobile: touch support
+    showBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault() // prevent click behavior on mobile
+      passInput.type = 'text'
+    })
+
+    showBtn.addEventListener('touchend', () => {
+      passInput.type = 'password'
+    })
+  </script>
 </body>
-
 </html>
