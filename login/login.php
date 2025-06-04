@@ -1,17 +1,37 @@
 <?php
-  error_reporting(E_ALL);
-  ini_set('display_errors', 1);
   $errorMsg = "";
 
   $conn = new mysqli("localhost", "root", "", "comp_shop_db");
   if ($conn->connect_error) {
     die("connection failed: " . $conn->connect_error);
   }
-  
-  $conn = new mysqli("localhost", "root", "", "comp_shop_db");
 
-  $res = $conn->query("SELECT * FROM shopsettings LIMIT 1");
-  $settings = $res->fetch_assoc();
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $stmt = $conn->prepare("SELECT * FROM dbuser WHERE username = ? AND password = ?");
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+      if ($result->num_rows === 1) {
+        // start session if you wanna keep them logged in
+        session_start();
+        $_SESSION['username'] = $username; // save username or whatever in session
+
+        header("Location: ../dashboard/dashboard.php"); // redirect to dashboard or whatever page
+        exit(); // stop executing the script after redirect
+      }
+    } else {
+      $errorMsg = "⚠️ Invalid Username or Password!";
+    }
+
+    $stmt->close();
+  }
+
+  $conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -20,9 +40,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Settings</title>
+  <link rel="stylesheet" href="../assets/style.css">
+
   <style>
     input {
-      width: 50px;
+      width: 300px;
       padding: 8px 8px;
       background-color: #41416b;
       border-radius: 4px;
@@ -33,7 +55,7 @@
     }
 
     input:focus {
-      width: 50px;
+      width: 300px;
       padding: 8px 8px;
       background-color: #eae8e8;
       border-radius: 4px;
@@ -44,7 +66,7 @@
     }
 
     .login {
-      width: 216px;
+      width: 316px;
       padding: 8px 8px;
       box-sizing: border-box; /* make width include padding and border */
       background-color: #a8f7b5 !important;
@@ -69,38 +91,37 @@
       height: 100vh; /* optional if u want it centered in the whole screen */
     }
 
-    .stringfield {
-      width: 200px !important;
+    label {
+      font-size: 12px;
     }
+
   </style>
 </head>
 
 <body>
-
-  <?php include('../include/index.php'); ?>
-
-  <div style="margin-left: 260px; padding: 20px;">
-    <h1>Settings</h1>
-    <p>Set hourly rate, shop info</p>
+  <div class="formcont">
+    <h1>Admin Log-in</h1>
+    <?php if ($errorMsg !== ""): ?>
+      <div class="error-banner">
+        <?= $errorMsg ?>
+      </div>
+    <?php endif; ?>
     <form method="POST">
-      <label name="hrlyrate">Hourly Rate</label>
+      <label name="username">Username</label>
       <br>
-      ₱ <input type="number" step="0.01" name="hrlyrate" value="<?= htmlspecialchars($settings['hourly_rate']) ?>">
-      <br>
-      <br>
-      <label name="shopname">Shop Name</label>
-      <br>
-      <input type="text" name="shopname" value="<?= htmlspecialchars($settings['shop_name']) ?>" class="stringfield">
+      <input type="text" name="username" placeholder="Username" required>
       <br>
       <br>
-      <label name="contactemail">Contact Email</label>
+      <label name="password">Password</label>
       <br>
-      <input type="text" name="contactemail" value="<?= htmlspecialchars($settings['contact_email']) ?>" class="stringfield">
+      <input type="password" name="password" placeholder="Password" required>
       <br>
       <br>
       <br>
-      <input type="submit" name="login" value="Save" class="login">
+      <input type="submit" name="login" value="Log-in" class="login">
     </form>
   </div>
+
 </body>
+
 </html>
