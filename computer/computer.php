@@ -12,7 +12,7 @@
       justify-content: center;
       gap: 8px;
     }
-\\TESTTT LANGGG
+
     .status-dot {
       width: 12px;
       height: 12px;
