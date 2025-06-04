@@ -12,7 +12,7 @@
       justify-content: center;
       gap: 8px;
     }
-
+\\TESTTT LANGGG
     .status-dot {
       width: 12px;
       height: 12px;
@@ -101,7 +101,6 @@
         $query = "SELECT * FROM tblcomputer ORDER BY computer_id ASC";
         $result = $conn->query($query);
 
-            //dwhudhauwhuddhwauhdw
         if (!$result) {
           echo '<tr><td colspan="5">Error: ' . $conn->error . '</td></tr>';
         } else if ($result->num_rows > 0) {
