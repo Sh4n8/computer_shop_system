@@ -80,7 +80,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'pdf') {
     <table border="1" cellpadding="4">
     <thead>
         <tr>
-            <th>report_id</th>
+            <th>#</th>
             <th>report_date</th>
             <th>computer_id</th>
             <th>total_sessions</th>
@@ -91,9 +91,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'pdf') {
     <tbody>';
 
     if ($result && $result->num_rows > 0) {
+        $counter = 1;
         while ($row = $result->fetch_assoc()) {
             $html .= '<tr>
-                <td>' . $row['report_id'] . '</td>
+                <td>' . $counter++ . '</td>
                 <td>' . $row['report_date'] . '</td>
                 <td>' . $row['computer_id'] . '</td>
                 <td>' . $row['total_sessions'] . '</td>
@@ -135,29 +136,36 @@ if (isset($_GET['action']) && $_GET['action'] === 'pdf') {
 
         form {
             margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* Unified red button styling */
-        .btn-red {
+        .btn-red,
+        .btn-red:visited,
+        .btn-red:active {
             background-color: #e74c3c;
             color: white;
             padding: 10px 16px;
             border: none;
             border-radius: 8px;
-            text-decoration: none;
             font-size: 14px;
+            text-align: center;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            height: 35px;
+            box-sizing: border-box;
             cursor: pointer;
-            margin-left: 8px;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s ease-in-out;
         }
 
         .btn-red:hover {
             background-color: #c0392b;
         }
 
-        /* Icon inside the button */
         .btn-red .icon {
             width: 18px;
             height: 18px;
@@ -183,28 +191,21 @@ if (isset($_GET['action']) && $_GET['action'] === 'pdf') {
             <label for="computer_id">Computer ID:</label>
             <input type="text" name="computer_id" value="<?= htmlspecialchars($filter_computer) ?>">
 
-            <!-- Search Button -->
             <button type="submit" class="btn-red">Search</button>
-
-            <!-- Reset Link Styled as Button -->
             <a href="computer_reports.php" class="btn-red">Reset</a>
-
-            <!-- Download PDF Link Styled as Button with Inline Icon -->
             <a href="computer_reports.php?action=pdf&date=<?= urlencode($filter_date) ?>&computer_id=<?= urlencode($filter_computer) ?>" class="btn-red">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M5 20h14v-2H5v2zm7-18l-6 6h4v6h4v-6h4l-6-6z" />
                 </svg>
                 Download PDF
             </a>
-
-
         </form>
 
         <!-- Reports Table -->
         <table>
             <thead>
                 <tr>
-                    <th>Report ID</th>
+                    <th>#</th>
                     <th>Report Date</th>
                     <th>Computer ID</th>
                     <th>Total Sessions</th>
@@ -213,10 +214,12 @@ if (isset($_GET['action']) && $_GET['action'] === 'pdf') {
                 </tr>
             </thead>
             <tbody>
-                <?php if ($result && $result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
+                <?php
+                $counter = 1;
+                if ($result && $result->num_rows > 0):
+                    while ($row = $result->fetch_assoc()): ?>
                         <tr>
-                            <td><?= $row['report_id'] ?></td>
+                            <td><?= $counter++ ?></td>
                             <td><?= $row['report_date'] ?></td>
                             <td><?= $row['computer_id'] ?></td>
                             <td><?= $row['total_sessions'] ?></td>
