@@ -1,4 +1,8 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // DB connection
 $host = "localhost";
 $user = "root";
@@ -52,19 +56,20 @@ $result = $conn->query($sql);
     <input type="text" name="computer_id" value="<?= htmlspecialchars($filter_computer) ?>">
 
     <button type="submit">Filter</button>
-    <a href="reports.php">Reset</a>
+    <a href="computer_reports.php">Reset</a>
+
 </form>
 
 <!-- Reports Table -->
 <table>
     <thead>
         <tr>
-            <th>Report ID</th>
-            <th>Date</th>
-            <th>Computer ID</th>
-            <th>Total Sessions</th>
-            <th>Total Duration</th>
-            <th>Total Earnings</th>
+            <th>report_id</th>
+            <th>report_date</th>
+            <th>computer_id</th>
+            <th>total_sessions</th>
+            <th>total_duration</th>
+            <th>total_earnings</th>
         </tr>
     </thead>
     <tbody>
@@ -75,8 +80,8 @@ $result = $conn->query($sql);
                     <td><?= $row['report_date'] ?></td>
                     <td><?= $row['computer_id'] ?></td>
                     <td><?= $row['total_sessions'] ?></td>
-                    <td><?= $row['total_duration'] ?> mins</td>
-                    <td>$<?= number_format($row['total_earnings'], 2) ?></td>
+                    <td><?= $row['total_duration'] ?></td>
+                    <td><?= $row['total_earnings'] ?></td>
                 </tr>
             <?php endwhile; ?>
         <?php else: ?>
@@ -84,8 +89,3 @@ $result = $conn->query($sql);
         <?php endif; ?>
     </tbody>
 </table>
-
-</body>
-</html>
-
-<?php $conn->close(); ?>
