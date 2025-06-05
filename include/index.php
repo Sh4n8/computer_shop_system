@@ -38,7 +38,7 @@
         </a>
       </li>
       <li class="<?= $currentPage == 'reports.php' ? 'active' : '' ?>">
-        <a href="../reports/reports.php">
+        <a href="../reports/computer_reports.php">
           <i class="bi bi-file-earmark-text"></i>
           <span>Reports</span>
         </a>
