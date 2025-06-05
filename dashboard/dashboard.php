@@ -5,21 +5,18 @@ include('../include/db.php');
 $result1 = $conn->query("SELECT COUNT(*) AS total FROM tblcomputer");
 $totalComputers = $result1->fetch_assoc()['total'];
 
-// Get total users
-$result2 = $conn->query("SELECT COUNT(*) AS total FROM dbuser");
-$totalUsers = $result2->fetch_assoc()['total'];
-
 // Get total sessions
 $result3 = $conn->query("SELECT COUNT(*) AS total FROM tblsessions");
 $totalSessions = $result3->fetch_assoc()['total'];
 
-// Example for active PCs and total income (adjust column/table names as needed)
+// Get active PCs
 $activePCsResult = $conn->query("SELECT COUNT(*) AS total FROM tblcomputer WHERE status = 'InUse'");
 $activePCs = $activePCsResult->fetch_assoc()['total'];
 
-//$incomeResult = $conn->query("SELECT SUM(amount) AS total_income FROM tblsessions WHERE status = 'Completed'");
-//totalIncome = $incomeResult->fetch_assoc()['total_income'] ?? 0;
-//?>
+// (Optional) Placeholder for income if needed in the future
+// $incomeResult = $conn->query("SELECT SUM(amount) AS total_income FROM tblsessions WHERE status = 'Completed'");
+// $totalIncome = $incomeResult->fetch_assoc()['total_income'] ?? 0;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,10 +27,10 @@ $activePCs = $activePCsResult->fetch_assoc()['total'];
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #1e1e2f; /* matches table UI background */
-  margin: 0;
-  color: #dcdcdc; /* soft light text */
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1e1e2f;
+      margin: 0;
+      color: #dcdcdc;
     }
 
     main {
@@ -74,7 +71,7 @@ $activePCs = $activePCsResult->fetch_assoc()['total'];
     .card {
       padding: 20px;
       border-radius: 12px;
-      background-color: #2c2c3e; /* darker card background */
+      background-color: #2c2c3e;
       text-align: center;
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
       transition: transform 0.2s ease;
@@ -115,7 +112,7 @@ $activePCs = $activePCsResult->fetch_assoc()['total'];
       gap: 8px;
       width: 150px;
       height: 45px;
-      background-color: #26263f; /* new color from image */
+      background-color: #26263f;
       color: #8ecfff;
       border: 1px solid transparent;
       border-radius: 6px;
@@ -137,7 +134,7 @@ $activePCs = $activePCsResult->fetch_assoc()['total'];
     .summary {
       margin-top: 40px;
       padding: 20px;
-      background-color: #27273f; /* slightly brighter to distinguish */
+      background-color: #27273f;
       border-left: 6px solid #6fa8dc;
       border-radius: 6px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -178,12 +175,6 @@ $activePCs = $activePCsResult->fetch_assoc()['total'];
       </div>
 
       <div class="card">
-        <i class="fas fa-user icon"></i>
-        <h3>Total Users</h3>
-        <p><?= $totalUsers ?></p>
-      </div>
-
-      <div class="card">
         <i class="fas fa-receipt icon"></i>
         <h3>Total Sessions</h3>
         <p><?= $totalSessions ?></p>
@@ -193,7 +184,8 @@ $activePCs = $activePCsResult->fetch_assoc()['total'];
     <div class="summary">
       <h4>📊 View Summary</h4>
       <p><strong>Active PCs:</strong> <?= $activePCs ?></p>
-      <p><strong>Estimated Total Income:</strong> ₱<?= number_format($totalIncome, 2) ?></p>
+      <!-- Optional: Uncomment if totalIncome is used -->
+      <!-- <p><strong>Estimated Total Income:</strong> ₱<?= number_format($totalIncome, 2) ?></p> -->
     </div>
   </main>
 </body>
