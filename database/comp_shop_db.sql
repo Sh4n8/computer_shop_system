@@ -116,12 +116,6 @@ ALTER TABLE `dbuser`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexes for table `shopsettings`
---
-ALTER TABLE `shopsettings`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `tblcomputer`
 --
 ALTER TABLE `tblcomputer`
@@ -150,12 +144,6 @@ ALTER TABLE `tblsessions`
 --
 ALTER TABLE `dbuser`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `shopsettings`
---
-ALTER TABLE `shopsettings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tblcomputer`
@@ -194,4 +182,4 @@ COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */; 
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
