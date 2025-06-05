@@ -145,8 +145,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'pdf') {
             border: none;
             border-radius: 8px;
             text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 14px;
             display: inline-flex;
             align-items: center;
             cursor: pointer;
