@@ -29,13 +29,13 @@ $row = $result->fetch_assoc();
       margin: 100px auto;
       padding: 30px;
       border-radius: 8px;
-      background-color: #fff3f3;
-      border: 1px solid #f44336;
+      background-color: #1e1e2f;
+      border: 1px solid #fff3f3;
     }
 
     .delete-box h2 {
       text-align: center;
-      color: #f44336;
+      color: #fff3f3;
     }
 
     table {
