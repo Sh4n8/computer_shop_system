@@ -41,49 +41,12 @@ $result = $conn->query($sql);
 </head>
 <body>
 
-<h2>Sales & Session Reports</h2>
+  <?php include('../include/index.php'); ?>
 
-<!-- Filter Form -->
-<form method="get">
-    <label for="date">Date:</label>
-    <input type="date" name="date" value="<?= htmlspecialchars($filter_date) ?>">
-
-    <label for="computer_id">Computer ID:</label>
-    <input type="text" name="computer_id" value="<?= htmlspecialchars($filter_computer) ?>">
-
-    <button type="submit">Filter</button>
-    <a href="reports.php">Reset</a>
-</form>
-
-<!-- Reports Table -->
-<table>
-    <thead>
-        <tr>
-            <th>Report ID</th>
-            <th>Date</th>
-            <th>Computer ID</th>
-            <th>Total Sessions</th>
-            <th>Total Duration</th>
-            <th>Total Earnings</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php if ($result && $result->num_rows > 0): ?>
-            <?php while ($row = $result->fetch_assoc()): ?>
-                <tr>
-                    <td><?= $row['report_id'] ?></td>
-                    <td><?= $row['report_date'] ?></td>
-                    <td><?= $row['computer_id'] ?></td>
-                    <td><?= $row['total_sessions'] ?></td>
-                    <td><?= $row['total_duration'] ?> mins</td>
-                    <td>$<?= number_format($row['total_earnings'], 2) ?></td>
-                </tr>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <tr><td colspan="6">No reports found.</td></tr>
-        <?php endif; ?>
-    </tbody>
-</table>
+  <div style="margin-left: 260px; padding: 20px;">
+    <h1>Reports</h1>
+    <p>View total sales & session logsssss</p>
+  </div>
 
 </body>
 </html>
