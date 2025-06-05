@@ -4,7 +4,7 @@ include('../include/db.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $computer_name = $conn->real_escape_string($_POST['computer_name']);
   $status = $conn->real_escape_string($_POST['status']);
-  $last_updated = date('Y-m-d H:i:s');
+  $last_updated = date('Y-m-d H:i:s');      
 
   // Manually calculate next ID
   $check = "SELECT MAX(computer_id) AS max_id FROM tblcomputer";
