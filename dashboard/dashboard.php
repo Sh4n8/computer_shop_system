@@ -13,6 +13,10 @@ $totalSessions = $result3->fetch_assoc()['total'];
 $activePCsResult = $conn->query("SELECT COUNT(*) AS total FROM tblcomputer WHERE status = 'InUse'");
 $activePCs = $activePCsResult->fetch_assoc()['total'];
 
+// Completed Sessions
+$completedSessionsResult = $conn->query("SELECT COUNT(*) AS total FROM tblsessions WHERE status = 'Completed'");
+$completedSessions = $completedSessionsResult->fetch_assoc()['total'];
+
 // Total Income
 $incomeResult = $conn->query("SELECT SUM(cost) AS total_income FROM tblsessions WHERE status = 'Completed'");
 $totalIncome = $incomeResult->fetch_assoc()['total_income'] ?? 0;
