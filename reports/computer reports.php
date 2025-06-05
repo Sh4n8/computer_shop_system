@@ -89,11 +89,3 @@ $result = $conn->query($sql);
         <?php endif; ?>
     </tbody>
 </table>
-<<<<<<<< HEAD:reports/computer reports.php
-
-</body>
-</html>
-
-<?php $conn->close(); ?>
-========
->>>>>>>> onin:reports/computer_reports.php
