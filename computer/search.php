@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Computer Stations</title>
+  <title>Search Computers</title>
   <link rel="stylesheet" href="../assets/style.css" />
   <style>
     .search-box {
@@ -32,10 +32,21 @@
       background-color: #d32f2f;
     }
 
+    .btn-red {
+      background-color:  #f44336;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      cursor: pointer;
+      border-radius: px;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: bold;
+    }
+
     .status-indicator {
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 8px;
     }
 
@@ -50,21 +61,6 @@
     .dot-InUse { background-color: #f44336; }
     .dot-Offline { background-color: #ffca28; }
     .dot-Maintenance { background-color: #9e9e9e; }
-
-    .btn-add {
-      display: inline-block;
-      margin-bottom: 15px;
-      color: #fff;
-      background-color: #f44336;
-      padding: 10px 15px;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background 0.3s ease;
-    }
-
-    .btn-add:hover {
-      background-color: #d32f2f; 
-    }
 
     .btn-action {
       padding: 6px 12px;
@@ -92,31 +88,18 @@
     .btn-delete:hover {
       background-color: #e53935;
     }
-
-    .table-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
   </style>
 </head>
 <body>
 <?php include('../include/index.php'); ?>
 <main>
-  <div class="table-header-row">
-    <div>
-      <h2 style="margin: 0;">Computer Stations</h2>
-      <p style="margin-top: 5px;">Manage your computer stations below.</p>
-    </div>
-    
-    <a href="insert.php" class="btn-add">+ Add Computer</a>
-  </div>
+  <h2>Search Computers</h2>
 
-<form method="GET" action="search.php" class="search-box">
-  <input type="text" name="query" placeholder="Search by name or status..." required />
-  <button type="submit">Search</button>
-</form>
+  <form method="GET" class="search-box">
+    <input type="text" name="query" placeholder="Search by name or status..." value="<?php echo isset($_GET['query']) ? htmlspecialchars($_GET['query']) : ''; ?>">
+    <button type="submit">Search</button>
+    <a href="computer.php" class="btn-red" style="margin-left: auto;">← Back to List</a>
+  </form>
 
   <table>
     <thead>
@@ -129,13 +112,15 @@
       </tr>
     </thead>
     <tbody>
-      <?php
-        $query = "SELECT * FROM tblcomputer ORDER BY computer_id ASC";
-        $result = $conn->query($query);
+    <?php
+      if (isset($_GET['query']) && trim($_GET['query']) !== '') {
+        $q = $conn->real_escape_string($_GET['query']);
+        $sql = "SELECT * FROM tblcomputer 
+                WHERE computer_name LIKE '%$q%' OR status LIKE '%$q%'
+                ORDER BY computer_id ASC";
+        $result = $conn->query($sql);
 
-        if (!$result) {
-          echo '<tr><td colspan="5">Error: ' . $conn->error . '</td></tr>';
-        } else if ($result->num_rows > 0) {
+        if ($result && $result->num_rows > 0) {
           while ($row = $result->fetch_assoc()) {
             $status = htmlspecialchars($row['status']);
             $dotClass = 'dot-' . str_replace(' ', '', $status);
@@ -154,9 +139,12 @@
                   </tr>';
           }
         } else {
-          echo '<tr><td colspan="5">No computers found.</td></tr>';
+          echo '<tr><td colspan="5">No results found for "<strong>' . htmlspecialchars($q) . '</strong>".</td></tr>';
         }
-      ?>
+      } else {
+        echo '<tr><td colspan="5">Please enter a search term above.</td></tr>';
+      }
+    ?>
     </tbody>
   </table>
 </main>

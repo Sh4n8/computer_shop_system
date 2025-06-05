@@ -102,7 +102,7 @@ if (isset($_GET['end_id'])) {
 
     <table>
       <tr>
-        <th>Session ID</th>
+        <th>#</th>
         <th>Computer</th>
         <th>User</th>
         <th>Start Time</th>
@@ -116,15 +116,17 @@ if (isset($_GET['end_id'])) {
                               WHERE s.status = 'Ongoing'");
 
       if ($result->num_rows > 0) {
+        $counter = 1;
         while ($row = $result->fetch_assoc()) {
           echo "<tr>
-                  <td>{$row['session_id']}</td>
+                  <td>{$counter}</td>
                   <td>{$row['computer_name']}</td>
                   <td>{$row['user_name']}</td>
                   <td>{$row['start_time']}</td>
                   <td>{$row['status']}</td>
                   <td><a class='btn-end' href='end_session.php?end_id={$row['session_id']}'>End</a></td>
               </tr>";
+          $counter++;
         }
       } else {
         echo "<tr><td colspan='6'>No ongoing sessions.</td></tr>";
