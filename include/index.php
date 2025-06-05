@@ -37,14 +37,8 @@
           <span>End Session</span>
         </a>
       </li>
-      <li class="<?= $currentPage == 'service.php' ? 'active' : '' ?>">
-        <a href="../service/service.php">
-          <i class="bi bi-tools"></i>
-          <span>Services</span>
-        </a>
-      </li>
       <li class="<?= $currentPage == 'reports.php' ? 'active' : '' ?>">
-        <a href="../reports/reports.php">
+        <a href="../reports/computer_reports.php">
           <i class="bi bi-file-earmark-text"></i>
           <span>Reports</span>
         </a>

@@ -9,23 +9,21 @@ $totalComputers = $result1->fetch_assoc()['total'];
 $result3 = $conn->query("SELECT COUNT(*) AS total FROM tblsessions");
 $totalSessions = $result3->fetch_assoc()['total'];
 
-// Active PCs
-$activePCsQuery = $conn->query("SELECT COUNT(*) AS total FROM tblsessions WHERE status = 'Ongoing'");
-if ($activePCsQuery && $row = $activePCsQuery->fetch_assoc()) {
-    $activePCs = $row['total'];
-}
-
-// Completed Sessions
-$completedSessionsResult = $conn->query("SELECT COUNT(*) AS total FROM tblsessions WHERE status = 'Completed'");
-$completedSessions = $completedSessionsResult->fetch_assoc()['total'];
+// Example for active PCs and total income (adjust column/table names as needed)
+$activePCsResult = $conn->query("SELECT COUNT(*) AS total FROM tblcomputer WHERE status = 'InUse'");
+$activePCs = $activePCsResult->fetch_assoc()['total'];
 
 // Total Income
-//$incomeResult = $conn->query("SELECT SUM(amount) AS total_income FROM tblsessions WHERE status = 'Completed'");
-//$totalIncome = $incomeResult->fetch_assoc()['total_income'] ?? 0;
-//?>
+$incomeResult = $conn->query("SELECT SUM(cost) AS total_income FROM tblsessions WHERE status = 'Completed'");
+$totalIncome = $incomeResult->fetch_assoc()['total_income'] ?? 0;
+if ($totalIncome === null) {
+  $totalIncome = 0; // Ensure totalIncome is always a number
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Dashboard</title>
@@ -67,29 +65,7 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
       background-color: #2b2b44;
       color: #ffffff;
     }
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 150px;
-      height: 45px;
-      background-color: #26263f;
-      color: #8ecfff;
-      border: 1px solid transparent;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 15px;
-      transition: all 0.25s ease;
-    }
-    .nav-btn:hover {
-      border-color: #6fa8dc;
-      color: #ffffff;
-    }
-    .nav-btn i {
-      font-size: 16px;
-    }
+
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -120,6 +96,40 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
       font-weight: bold;
       color: #ffffff;
     }
+
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      padding: 20px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 150px;
+      height: 45px;
+      background-color: #26263f; /* new color from image */
+      color: #8ecfff;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      border-color: #6fa8dc;
+      color: #ffffff;
+    }
+
+    .nav-btn i {
+      font-size: 16px;
+    }
+
     .summary {
       margin-top: 40px;
       padding: 20px;
@@ -139,6 +149,7 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
     }
   </style>
 </head>
+
 <body>
   <?php include('../include/index.php'); ?>
 
@@ -176,4 +187,5 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
     </div>
   </main>
 </body>
+
 </html>
