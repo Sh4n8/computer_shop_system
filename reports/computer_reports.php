@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../tcpdf/tcpdf.php';
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -8,16 +10,12 @@ $user = "root";
 $pass = "";
 $db = "comp_shop_db";
 $conn = new mysqli($host, $user, $pass, $db);
-
-// Handle errors
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// --- START: Generate/update reports from sessions ---
-
-// Aggregate data from tblsessions for completed sessions
-$sql = "
+// --- START: Generate/update reports from sessions (tblreports) ---
+$aggregateSQL = "
     SELECT 
         DATE(start_time) AS report_date,
         computer_id,
@@ -29,29 +27,25 @@ $sql = "
     GROUP BY DATE(start_time), computer_id
 ";
 
-$result = $conn->query($sql);
-
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
+$aggregateResult = $conn->query($aggregateSQL);
+if ($aggregateResult && $aggregateResult->num_rows > 0) {
+    while ($row = $aggregateResult->fetch_assoc()) {
         $report_date = $row['report_date'];
         $computer_id = $row['computer_id'];
         $total_sessions = $row['total_sessions'];
         $total_duration = $row['total_duration'];
         $total_earnings = $row['total_earnings'];
 
-        // Check if report already exists for that date and computer
         $check = $conn->prepare("SELECT report_id FROM tblreports WHERE report_date = ? AND computer_id = ?");
         $check->bind_param("si", $report_date, $computer_id);
         $check->execute();
         $check->store_result();
 
         if ($check->num_rows > 0) {
-            // Update existing report
             $update = $conn->prepare("UPDATE tblreports SET total_sessions = ?, total_duration = ?, total_earnings = ? WHERE report_date = ? AND computer_id = ?");
             $update->bind_param("iidsi", $total_sessions, $total_duration, $total_earnings, $report_date, $computer_id);
             $update->execute();
         } else {
-            // Insert new report
             $insert = $conn->prepare("INSERT INTO tblreports (report_date, computer_id, total_sessions, total_duration, total_earnings) VALUES (?, ?, ?, ?, ?)");
             $insert->bind_param("siiid", $report_date, $computer_id, $total_sessions, $total_duration, $total_earnings);
             $insert->execute();
@@ -59,32 +53,68 @@ if ($result && $result->num_rows > 0) {
         $check->close();
     }
 }
-if ($result) {
-    $result->free();
-}
-// --- END: Generate/update reports from sessions ---
+// --- END: Reports sync ---
 
-// Filters
-$filter_date = trim($_GET['date'] ?? '');
-$filter_computer = trim($_GET['computer_id'] ?? '');
+// Handle filters
+$filter_date = $_GET['date'] ?? '';
+$filter_computer = $_GET['computer_id'] ?? '';
 
-// Query building
 $sql = "SELECT * FROM tblreports WHERE 1=1";
-
 if (!empty($filter_date)) {
-    $sql .= " AND report_date LIKE '%" . $conn->real_escape_string($filter_date) . "%'";
+    $sql .= " AND report_date = '" . $conn->real_escape_string($filter_date) . "'";
 }
-
 if (!empty($filter_computer)) {
-    $sql .= " AND computer_id LIKE '%" . $conn->real_escape_string($filter_computer) . "%'";
+    $sql .= " AND computer_id = '" . $conn->real_escape_string($filter_computer) . "'";
 }
-
 $result = $conn->query($sql);
+
+// If PDF export requested
+if (isset($_GET['action']) && $_GET['action'] === 'pdf') {
+    ob_start();
+    $pdf = new TCPDF();
+    $pdf->AddPage();
+    $pdf->SetFont('helvetica', '', 10);
+
+    $html = '
+    <h2>Sales & Session Reports</h2>
+    <table border="1" cellpadding="4">
+    <thead>
+        <tr>
+            <th>report_id</th>
+            <th>report_date</th>
+            <th>computer_id</th>
+            <th>total_sessions</th>
+            <th>total_duration</th>
+            <th>total_earnings</th>
+        </tr>
+    </thead>
+    <tbody>';
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $html .= '<tr>
+                <td>' . $row['report_id'] . '</td>
+                <td>' . $row['report_date'] . '</td>
+                <td>' . $row['computer_id'] . '</td>
+                <td>' . $row['total_sessions'] . '</td>
+                <td>' . $row['total_duration'] . '</td>
+                <td>' . $row['total_earnings'] . '</td>
+            </tr>';
+        }
+    } else {
+        $html .= '<tr><td colspan="6">No reports found.</td></tr>';
+    }
+
+    $html .= '</tbody></table>';
+    $pdf->writeHTML($html, true, false, true, false, '');
+    ob_end_clean();
+    $pdf->Output('report.pdf', 'I');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Reports</title>
     <style>
@@ -93,75 +123,68 @@ $result = $conn->query($sql);
             border-collapse: collapse;
             margin-top: 10px;
         }
-
-        th,
-        td {
+        th, td {
             border: 1px solid #ccc;
             padding: 8px;
             text-align: center;
         }
-
         form {
             margin-bottom: 15px;
         }
     </style>
 </head>
-
 <body>
 
-    <?php include('../include/index.php'); ?>
+<?php include('../include/index.php'); ?>
 
-    <div style="margin-left: 260px; padding: 20px;">
-        <h1>Reports</h1>
-        <p>View total sales & session logs</p>
+<div style="margin-left: 260px; padding: 20px;">
+    <h1>Reports</h1>
+    <p>View total sales & session logs</p>
 
-        <!-- Filter Form -->
-        <form method="get">
-            <label for="date">Date:</label>
-            <input type="date" name="date" value="<?= htmlspecialchars($filter_date) ?>">
+    <!-- Filter Form -->
+    <form method="get">
+        <label for="date">Date:</label>
+        <input type="date" name="date" value="<?= htmlspecialchars($filter_date) ?>">
 
-            <label for="computer_id">Computer ID:</label>
-            <input type="text" name="computer_id" value="<?= htmlspecialchars($filter_computer) ?>">
+        <label for="computer_id">Computer ID:</label>
+        <input type="text" name="computer_id" value="<?= htmlspecialchars($filter_computer) ?>">
 
-            <button type="submit">Filter</button>
-            <a href="computer_reports.php">Reset</a>
-        </form>
+        <button type="submit">Filter</button>
+        <a href="computer_reports.php">Reset</a>
+        <a href="computer_reports.php?action=pdf&date=<?= urlencode($filter_date) ?>&computer_id=<?= urlencode($filter_computer) ?>">Download PDF</a>
+    </form>
 
-        <!-- Reports Table -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Report ID</th>
-                    <th>Report Date</th>
-                    <th>Computer ID</th>
-                    <th>Total Sessions</th>
-                    <th>Total Duration</th>
-                    <th>Total Earnings</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($result && $result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <tr>
-                            <td><?= $row['report_id'] ?></td>
-                            <td><?= $row['report_date'] ?></td>
-                            <td><?= $row['computer_id'] ?></td>
-                            <td><?= $row['total_sessions'] ?></td>
-                            <td><?= $row['total_duration'] ?></td>
-                            <td><?= $row['total_earnings'] ?></td>
-                        </tr>
-                    <?php endwhile; ?>
-                <?php else: ?>
+    <!-- Reports Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Report ID</th>
+                <th>Report Date</th>
+                <th>Computer ID</th>
+                <th>Total Sessions</th>
+                <th>Total Duration</th>
+                <th>Total Earnings</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ($result && $result->num_rows > 0): ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
-                        <td colspan="6">No reports found.</td>
+                        <td><?= $row['report_id'] ?></td>
+                        <td><?= $row['report_date'] ?></td>
+                        <td><?= $row['computer_id'] ?></td>
+                        <td><?= $row['total_sessions'] ?></td>
+                        <td><?= $row['total_duration'] ?></td>
+                        <td><?= $row['total_earnings'] ?></td>
                     </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
-
+                <?php endwhile; ?>
+            <?php else: ?>
+                <tr><td colspan="6">No reports found.</td></tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>
 </body>
-
 </html>
 
 <?php $conn->close(); ?>
