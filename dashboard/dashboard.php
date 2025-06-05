@@ -12,7 +12,7 @@ $totalSessions = $result3->fetch_assoc()['total'];
 // Active PCs
 $activePCsQuery = $conn->query("SELECT COUNT(*) AS total FROM tblsessions WHERE status = 'Ongoing'");
 if ($activePCsQuery && $row = $activePCsQuery->fetch_assoc()) {
-    $activePCs = $row['total'];
+  $activePCs = $row['total'];
 }
 
 // Completed Sessions
@@ -20,12 +20,16 @@ $completedSessionsResult = $conn->query("SELECT COUNT(*) AS total FROM tblsessio
 $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
 
 // Total Income
-//$incomeResult = $conn->query("SELECT SUM(amount) AS total_income FROM tblsessions WHERE status = 'Completed'");
-//$totalIncome = $incomeResult->fetch_assoc()['total_income'] ?? 0;
-//?>
+$incomeResult = $conn->query("SELECT SUM(cost) AS total_income FROM tblsessions WHERE status = 'Completed'");
+$totalIncome = $incomeResult->fetch_assoc()['total_income'] ?? 0;
+if ($totalIncome === null) {
+  $totalIncome = 0; // Ensure totalIncome is always a number
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Dashboard</title>
@@ -39,14 +43,17 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
       margin: 0;
       color: #dcdcdc;
     }
+
     main {
       margin-left: 250px;
       padding: 30px;
     }
+
     h2 {
       color: #ffffff;
       margin-bottom: 10px;
     }
+
     .nav-bar {
       margin-bottom: 30px;
       display: flex;
@@ -54,6 +61,7 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
       gap: 16px;
       padding: 20px;
     }
+
     .nav-bar a {
       margin-right: 15px;
       text-decoration: none;
@@ -63,10 +71,12 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
       border-radius: 4px;
       transition: background-color 0.3s ease;
     }
+
     .nav-bar a:hover {
       background-color: #2b2b44;
       color: #ffffff;
     }
+
     .nav-btn {
       display: inline-flex;
       align-items: center;
@@ -83,18 +93,22 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
       font-size: 15px;
       transition: all 0.25s ease;
     }
+
     .nav-btn:hover {
       border-color: #6fa8dc;
       color: #ffffff;
     }
+
     .nav-btn i {
       font-size: 16px;
     }
+
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
     }
+
     .card {
       padding: 20px;
       border-radius: 12px;
@@ -103,23 +117,28 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
       transition: transform 0.2s ease;
     }
+
     .card:hover {
       transform: translateY(-5px);
     }
+
     .card .icon {
       font-size: 32px;
       margin-bottom: 12px;
       color: #6fa8dc;
     }
+
     .card h3 {
       color: #d1eaff;
       margin-bottom: 6px;
     }
+
     .card p {
       font-size: 22px;
       font-weight: bold;
       color: #ffffff;
     }
+
     .summary {
       margin-top: 40px;
       padding: 20px;
@@ -128,10 +147,12 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
       border-radius: 6px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
+
     .summary h4 {
       margin-bottom: 12px;
       color: #8ecfff;
     }
+
     .summary p {
       margin: 6px 0;
       font-size: 16px;
@@ -139,6 +160,7 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
     }
   </style>
 </head>
+
 <body>
   <?php include('../include/index.php'); ?>
 
@@ -176,5 +198,5 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
     </div>
   </main>
 </body>
-</html>
 
+</html>
