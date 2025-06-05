@@ -64,6 +64,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       color: #155724;
       margin-bottom: 20px;
     }
+
+    .btn-start {
+      background-color: #f44336;
+      /* same as the Edit button's orange */
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      width: fit-content;
+    }
+
+    .btn-start:hover {
+      background-color: #ea580c;
+      /* darker orange on hover */
+    }
   </style>
 </head>
 
@@ -95,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <label>Your Name:</label>
       <input type="text" name="user_name" required>
 
-      <input type="submit" value="Start Session">
+      <button type="submit" class="btn-start">Start Session</button>
     </form>
   </div>
 
