@@ -12,7 +12,7 @@
 
   <div style="margin-left: 260px; padding: 20px;">
     <h1>Reports</h1>
-    <p>View total sales & session logs</p>
+    <p>View total sales & session logsssss</p>
   </div>
 
 </body>
