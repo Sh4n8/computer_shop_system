@@ -177,3 +177,4 @@ $completedSessions = $completedSessionsResult->fetch_assoc()['total'];
   </main>
 </body>
 </html>
+
