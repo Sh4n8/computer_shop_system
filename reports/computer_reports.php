@@ -115,6 +115,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'pdf') {
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Reports</title>
@@ -124,108 +125,116 @@ if (isset($_GET['action']) && $_GET['action'] === 'pdf') {
             border-collapse: collapse;
             margin-top: 10px;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #ccc;
             padding: 8px;
             text-align: center;
         }
+
         form {
             margin-bottom: 15px;
         }
-   /* Unified red button styling */
-.btn-red {
-    background-color: #e74c3c;
-    color: white;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    margin-left: 8px;
-    transition: background-color 0.2s;
-}
-.btn-red:hover {
-    background-color: #c0392b;
-}
 
-/* Icon inside the button */
-.btn-red .icon {
-    width: 18px;
-    height: 18px;
-    margin-right: 6px;
-    fill: white;
-}
+        /* Unified red button styling */
+        .btn-red {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            margin-left: 8px;
+            transition: background-color 0.2s;
+        }
 
+        .btn-red:hover {
+            background-color: #c0392b;
+        }
+
+        /* Icon inside the button */
+        .btn-red .icon {
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
+            fill: white;
+        }
     </style>
 </head>
+
 <body>
 
-<?php include('../include/index.php'); ?>
+    <?php include('../include/index.php'); ?>
 
-<div style="margin-left: 260px; padding: 20px;">
-    <h1>Reports</h1>
-    <p>View total sales & session logs</p>
+    <div style="margin-left: 260px; padding: 20px;">
+        <h1>Reports</h1>
+        <p>View total sales & session logs</p>
 
-    <!-- Filter Form -->
-    <form method="get">
-        <label for="date">Date:</label>
-        <input type="date" name="date" value="<?= htmlspecialchars($filter_date) ?>">
+        <!-- Filter Form -->
+        <form method="get">
+            <label for="date">Date:</label>
+            <input type="date" name="date" value="<?= htmlspecialchars($filter_date) ?>">
 
-        <label for="computer_id">Computer ID:</label>
-        <input type="text" name="computer_id" value="<?= htmlspecialchars($filter_computer) ?>">
+            <label for="computer_id">Computer ID:</label>
+            <input type="text" name="computer_id" value="<?= htmlspecialchars($filter_computer) ?>">
 
-     <!-- Search Button -->
-<button type="submit" class="btn-red">Search</button>
+            <!-- Search Button -->
+            <button type="submit" class="btn-red">Search</button>
 
-<!-- Reset Link Styled as Button -->
-<a href="computer_reports.php" class="btn-red">Reset</a>
+            <!-- Reset Link Styled as Button -->
+            <a href="computer_reports.php" class="btn-red">Reset</a>
 
-<!-- Download PDF Link Styled as Button with Inline Icon -->
-<a href="computer_reports.php?action=pdf&date=<?= urlencode($filter_date) ?>&computer_id=<?= urlencode($filter_computer) ?>" class="btn-red">
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M5 20h14v-2H5v2zm7-18l-6 6h4v6h4v-6h4l-6-6z"/>
-    </svg>
-    Download PDF
-</a>
+            <!-- Download PDF Link Styled as Button with Inline Icon -->
+            <a href="computer_reports.php?action=pdf&date=<?= urlencode($filter_date) ?>&computer_id=<?= urlencode($filter_computer) ?>" class="btn-red">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M5 20h14v-2H5v2zm7-18l-6 6h4v6h4v-6h4l-6-6z" />
+                </svg>
+                Download PDF
+            </a>
 
 
-    </form>
+        </form>
 
-    <!-- Reports Table -->
-    <table>
-        <thead>
-            <tr>
-                <th>Report ID</th>
-                <th>Report Date</th>
-                <th>Computer ID</th>
-                <th>Total Sessions</th>
-                <th>Total Duration</th>
-                <th>Total Earnings</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if ($result && $result->num_rows > 0): ?>
-                <?php while ($row = $result->fetch_assoc()): ?>
+        <!-- Reports Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Report ID</th>
+                    <th>Report Date</th>
+                    <th>Computer ID</th>
+                    <th>Total Sessions</th>
+                    <th>Total Duration</th>
+                    <th>Total Earnings</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($result && $result->num_rows > 0): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <tr>
+                            <td><?= $row['report_id'] ?></td>
+                            <td><?= $row['report_date'] ?></td>
+                            <td><?= $row['computer_id'] ?></td>
+                            <td><?= $row['total_sessions'] ?></td>
+                            <td><?= $row['total_duration'] ?></td>
+                            <td><?= $row['total_earnings'] ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
                     <tr>
-                        <td><?= $row['report_id'] ?></td>
-                        <td><?= $row['report_date'] ?></td>
-                        <td><?= $row['computer_id'] ?></td>
-                        <td><?= $row['total_sessions'] ?></td>
-                        <td><?= $row['total_duration'] ?></td>
-                        <td><?= $row['total_earnings'] ?></td>
+                        <td colspan="6">No reports found.</td>
                     </tr>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <tr><td colspan="6">No reports found.</td></tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </body>
+
 </html>
 
 <?php $conn->close(); ?>
