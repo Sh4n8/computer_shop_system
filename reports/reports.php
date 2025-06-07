@@ -192,8 +192,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'pdf') {
             <input type="text" name="computer_id" value="<?= htmlspecialchars($filter_computer) ?>">
 
             <button type="submit" class="btn-red">Search</button>
-            <a href="computer_reports.php" class="btn-red">Reset</a>
-            <a href="computer_reports.php?action=pdf&date=<?= urlencode($filter_date) ?>&computer_id=<?= urlencode($filter_computer) ?>" class="btn-red">
+            <a href="reports.php" class="btn-red">Reset</a>
+            <a href="reports.php?action=pdf&date=<?= urlencode($filter_date) ?>&computer_id=<?= urlencode($filter_computer) ?>" class="btn-red">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M5 20h14v-2H5v2zm7-18l-6 6h4v6h4v-6h4l-6-6z" />
                 </svg>

@@ -41,14 +41,17 @@ if ($totalIncome === null) {
       margin: 0;
       color: #dcdcdc;
     }
+
     main {
       margin-left: 250px;
       padding: 30px;
     }
+
     h2 {
       color: #ffffff;
       margin-bottom: 10px;
     }
+
     .nav-bar {
       margin-bottom: 30px;
       display: flex;
@@ -56,6 +59,7 @@ if ($totalIncome === null) {
       gap: 16px;
       padding: 20px;
     }
+
     .nav-bar a {
       margin-right: 15px;
       text-decoration: none;
@@ -65,6 +69,7 @@ if ($totalIncome === null) {
       border-radius: 4px;
       transition: background-color 0.3s ease;
     }
+
     .nav-bar a:hover {
       background-color: #2b2b44;
       color: #ffffff;
@@ -75,6 +80,7 @@ if ($totalIncome === null) {
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
     }
+
     .card {
       padding: 20px;
       border-radius: 12px;
@@ -83,18 +89,22 @@ if ($totalIncome === null) {
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
       transition: transform 0.2s ease;
     }
+
     .card:hover {
       transform: translateY(-5px);
     }
+
     .card .icon {
       font-size: 32px;
       margin-bottom: 12px;
       color: #6fa8dc;
     }
+
     .card h3 {
       color: #d1eaff;
       margin-bottom: 6px;
     }
+
     .card p {
       font-size: 22px;
       font-weight: bold;
@@ -115,7 +125,8 @@ if ($totalIncome === null) {
       gap: 8px;
       width: 150px;
       height: 45px;
-      background-color: #26263f; /* new color from image */
+      background-color: #26263f;
+      /* new color from image */
       color: #8ecfff;
       border: 1px solid transparent;
       border-radius: 6px;
@@ -142,10 +153,12 @@ if ($totalIncome === null) {
       border-radius: 6px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
+
     .summary h4 {
       margin-bottom: 12px;
       color: #8ecfff;
     }
+
     .summary p {
       margin: 6px 0;
       font-size: 16px;
@@ -185,7 +198,6 @@ if ($totalIncome === null) {
 
     <div class="summary">
       <h4>📊 View Summary</h4>
-      <p><strong>Active PCs:</strong> <?= $activePCs ?></p>
       <p><strong>Completed Sessions:</strong> <?= $completedSessions ?></p>
       <p><strong>Total Income:</strong> ₱<?= number_format($totalIncome, 2) ?></p>
     </div>
